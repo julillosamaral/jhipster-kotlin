@@ -196,7 +196,8 @@ const serverFiles = {
             templates: [
                 {
                     file: 'package/domain/EntityTest.kt',
-                    renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}Test.kt`
+                    renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}Test.kt`,
+                    useBluePrint: true
                 }
             ]
         },
@@ -206,7 +207,8 @@ const serverFiles = {
             templates: [
                 {
                     file: 'package/service/dto/EntityDTOTest.kt',
-                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}Test.kt`
+                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}Test.kt`,
+                    useBluePrint: true
                 }
             ]
         },
@@ -218,7 +220,8 @@ const serverFiles = {
             templates: [
                 {
                     file: 'package/service/mapper/EntityMapperTest.kt',
-                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}MapperTest.kt`
+                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}MapperTest.kt`,
+                    useBluePrint: true
                 }
             ]
         }
