@@ -19,8 +19,8 @@
 package <%= packageName %>.domain
 
 import org.junit.jupiter.api.Test
-import static org.assertj.core.api.Assertions.assertThat
-import <%= packageName %>.web.rest.TestUtil
+import org.assertj.core.api.Assertions.assertThat
+import <%= packageName %>.web.rest.equalsVerifier
 <%_
 let hasOauthUser = false;
 for (idx in relationships) {
@@ -39,15 +39,15 @@ class <%= entityClass %>Test {
 
     @Test
     fun equalsVerifier() {
-        TestUtil.equalsVerifier(<%= asEntity(entityClass) %>::class)
+        equalsVerifier(<%= asEntity(entityClass) %>::class)
         val <%= asEntity(entityInstance) %>1 = <%= asEntity(entityClass) %>()
-        <%= asEntity(entityInstance) %>1.setId(<% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"id1"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>)
+        <%= asEntity(entityInstance) %>1.id = <% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"id1"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>
         val <%= asEntity(entityInstance) %>2 = <%= asEntity(entityClass) %>()
-        <%= asEntity(entityInstance) %>2.setId(<%= asEntity(entityInstance) %>1.getId())
+        <%= asEntity(entityInstance) %>2.id = <%= asEntity(entityInstance) %>1.id
         assertThat(<%= asEntity(entityInstance) %>1).isEqualTo(<%= asEntity(entityInstance) %>2)
-        <%= asEntity(entityInstance) %>2.setId(<% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>2L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"id2"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>)
+        <%= asEntity(entityInstance) %>2.id = <% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>2L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"id2"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>
         assertThat(<%= asEntity(entityInstance) %>1).isNotEqualTo(<%= asEntity(entityInstance) %>2)
-        <%= asEntity(entityInstance) %>1.setId(null)
+        <%= asEntity(entityInstance) %>1.id = null
         assertThat(<%= asEntity(entityInstance) %>1).isNotEqualTo(<%= asEntity(entityInstance) %>2)
     }
 }
